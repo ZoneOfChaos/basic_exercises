@@ -13,7 +13,13 @@ students = [
     {'first_name': 'Петя'},
 ]
 # ???
+name_count = {}
+for student in students:
+    name = student['first_name']
+    name_count[name] = name_count.get(name, 0) + 1
 
+for name, count in name_count.items():
+    print(f'{name}: {count}')
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
@@ -27,7 +33,8 @@ students = [
     {'first_name': 'Оля'},
 ]
 # ???
-
+names = [student['first_name'] for student in students]
+print(max([student['first_name'] for student in students], key=names.count))
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -52,7 +59,11 @@ school_students = [
     ],
 ]
 # ???
-
+i = 0
+for s_class in school_students:
+  names = [student['first_name'] for student in s_class]
+  i+=1
+  print(f'{i} класс ' + max([student['first_name'] for student in s_class], key=names.count))
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -73,7 +84,10 @@ is_male = {
     'Даша': False,
 }
 # ???
-
+for s_class in school:
+  boys_count = sum(1 for student in s_class['students'] if is_male.get(student['first_name']))
+  girls_count = sum(1 for student in s_class['students'] if not is_male.get(student['first_name']))
+  print(f"класс {s_class['class']}: мальчиков - {boys_count}, девочек - {girls_count}")
 
 # Задание 5
 # По информации о учениках разных классов нужно найти класс, в котором больше всего девочек и больше всего мальчиков
@@ -92,4 +106,15 @@ is_male = {
     'Миша': True,
 }
 # ???
-
+for s_class in school:
+  max_boys = 0
+  max_girls = 0
+  boys_count = sum(1 for student in s_class['students'] if is_male.get(student['first_name']))
+  girls_count = sum(1 for student in s_class['students'] if not is_male.get(student['first_name']))
+  max_boys = max(boys_count, max_boys)
+  max_girls = max(girls_count, max_girls)
+  if max_boys:
+    print(f"Больше всего мальчиков в классе {s_class['class']}")
+  if max_girls:
+    print(f"Больше всего девочек в классе {s_class['class']}")
+  
